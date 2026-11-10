@@ -1,0 +1,695 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}</style></head><body><title>Juntos Produzimos Mais</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: capa verde-floresta com talhões ligados em rede; abaixo, mural em cartões. Celular com barra de abas inferior, desktop com abas no topo. */
+:root{
+  --bg:#EDF1ED; --surface:#FAFBF9; --surface-2:#F1F5F1; --ink:#12241A; --ink-soft:#52645A; --line:#D3DDD5;
+  --leaf:#2A7A4B; --leaf-ink:#FFFFFF; --leaf-deep:#1D5C37; --leaf-tint:#DCEDE2;
+  --clay:#8A4F0F; --clay-tint:#F4E5CC;
+  --shadow:0 1px 2px rgba(12,32,22,.06), 0 14px 30px -18px rgba(12,32,22,.30);
+  --hero-a:#14432F; --hero-b:#0A2218; --hero-ink:#F2F6F1; --hero-soft:#B9CDBF; --gold:#EDC46A;
+  --f-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-body:'Source Sans 3','Segoe UI',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B140F; --surface:#121D16; --surface-2:#172519; --ink:#E8EFE9; --ink-soft:#9DB0A4; --line:#24352A;
+    --leaf:#5FBF85; --leaf-ink:#0C1A11; --leaf-deep:#8FD8AE; --leaf-tint:#1D3826;
+    --clay:#E3A65A; --clay-tint:#392A15; --shadow:none; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B140F; --surface:#121D16; --surface-2:#172519; --ink:#E8EFE9; --ink-soft:#9DB0A4; --line:#24352A;
+  --leaf:#5FBF85; --leaf-ink:#0C1A11; --leaf-deep:#8FD8AE; --leaf-tint:#1D3826;
+  --clay:#E3A65A; --clay-tint:#392A15; --shadow:none; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:400 17px/1.55 var(--f-body);
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:0 96px;
+}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top, 0px); z-index:10; background:var(--bg)}
+.wrap{max-width:1000px; margin:0 auto}
+h1,h2,h3{font-family:var(--f-display); line-height:1.1; text-wrap:balance; margin:0; letter-spacing:-0.015em}
+h1{font-size:2rem; font-weight:800}
+h2{font-size:1.35rem; font-weight:700}
+h3{font-size:1.12rem; font-weight:700; line-height:1.25}
+p{margin:0}
+a{color:var(--leaf-deep)}
+:focus-visible{outline:3px solid var(--leaf); outline-offset:2px; border-radius:8px}
+.ic{width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex:none}
+
+/* Cabeçalho e navegação */
+.top{position:sticky; top:env(safe-area-inset-top, 0px); z-index:11; background:var(--bg);
+  margin-inline:calc(-1 * max(16px, env(safe-area-inset-left, 0px))) calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-inline:max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px));
+  border-bottom:1px solid var(--line)}
+.top-in{max-width:1000px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:60px}
+.brand{display:flex; align-items:center; gap:10px; min-width:0}
+.brand svg{width:30px; height:30px; flex:none}
+.brand b{font-family:var(--f-display); font-size:1.08rem; font-weight:800; letter-spacing:-0.01em; display:block; line-height:1.1}
+.proto{font-style:normal; font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:999px; background:var(--leaf-tint); color:var(--leaf-deep); margin-left:8px; vertical-align:middle; white-space:nowrap}
+.brand span{display:block; font-size:.78rem; color:var(--ink-soft); line-height:1.2}
+nav{position:fixed; left:0; right:0; bottom:0; z-index:12; background:var(--surface); border-top:1px solid var(--line);
+  display:grid; grid-template-columns:repeat(4,1fr);
+  padding:8px max(8px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px))}
+nav a{display:grid; justify-items:center; gap:2px; text-decoration:none; color:var(--ink-soft); font-size:.74rem; font-weight:700; padding:2px 0; min-height:48px}
+nav a .ico{display:grid; place-items:center; width:54px; height:30px; border-radius:999px}
+nav a[aria-current="page"]{color:var(--leaf-deep)}
+nav a[aria-current="page"] .ico{background:var(--leaf-tint)}
+
+/* Capa */
+.hero{margin-top:20px; border-radius:24px; padding:26px 20px 20px; color:var(--hero-ink);
+  background:linear-gradient(165deg,var(--hero-a),var(--hero-b)); display:grid; gap:16px; overflow:hidden}
+.eyebrow{font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--hero-soft)}
+.hero h1{font-size:clamp(2.4rem, 11vw, 4.2rem); line-height:1.02; color:var(--hero-ink)}
+.hero h1 em{font-style:normal; color:var(--gold)}
+.hero-lead{color:var(--hero-soft); font-size:1.05rem; max-width:46ch}
+.cta{display:flex; flex-wrap:wrap; gap:10px; padding-top:4px}
+.art{border-radius:16px; overflow:hidden; height:240px; margin-top:6px; background:#0A2218}
+.art svg{display:block; width:100%; height:100%}
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding-top:16px; border-top:1px solid rgba(242,246,241,.16)}
+.stats span{font-size:.82rem; color:var(--hero-soft); line-height:1.25}
+.stats b{display:block; font:800 1.8rem/1.1 var(--f-display); color:var(--hero-ink); letter-spacing:-0.02em}
+
+/* Como usar */
+.how{margin:0; padding:0; list-style:none; display:grid; gap:12px; grid-template-columns:1fr}
+.how li{display:flex; gap:12px; align-items:flex-start; padding:12px 14px; background:var(--surface-2); border:1px solid var(--line); border-radius:16px}
+.how .tile{width:38px; height:38px; border-radius:10px}
+.how b{display:block; font-family:var(--f-display); font-size:1.02rem; line-height:1.25; margin-bottom:2px}
+.how p{font-size:.94rem; color:var(--ink-soft); line-height:1.45}
+
+/* Seções */
+main{padding-top:28px; display:grid; gap:22px}
+.view{display:grid; gap:20px; align-content:start}
+.view[hidden]{display:none!important}
+.view.in{animation:rise .35s ease both}
+@keyframes rise{from{opacity:.4; transform:translateY(8px)} to{opacity:1; transform:none}}
+.head{display:grid; gap:10px}
+.lead{color:var(--ink-soft); max-width:62ch}
+.notice{background:var(--clay-tint); color:var(--clay); border-radius:12px; padding:10px 14px; font-size:.9rem; font-weight:600}
+
+/* Botões */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:46px; padding:0 20px; border-radius:12px; border:1px solid transparent; background:var(--leaf); color:var(--leaf-ink); font:700 1rem var(--f-body); cursor:pointer; text-decoration:none}
+.btn.small{min-height:40px; padding:0 14px; font-size:.92rem}
+.btn.light{background:var(--hero-ink); color:var(--hero-b)}
+.btn.ghost{background:transparent; color:var(--hero-ink); border-color:rgba(242,246,241,.35)}
+.btn.ghost:focus-visible,.btn.light:focus-visible{outline-color:var(--gold)}
+
+/* Filtros */
+.filters{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.seg{display:flex; border:1px solid var(--line); border-radius:999px; background:var(--surface); padding:3px}
+.seg button{border:0; background:transparent; color:var(--ink-soft); font:700 .92rem var(--f-body); padding:8px 16px; border-radius:999px; cursor:pointer; min-height:40px}
+.seg button[aria-pressed="true"]{background:var(--leaf); color:var(--leaf-ink)}
+select,input,textarea{font:400 1rem var(--f-body); color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 12px; min-height:46px; width:100%}
+.filters select{width:auto; max-width:100%}
+textarea{min-height:92px; resize:vertical}
+label{display:grid; gap:6px; font-weight:700; font-size:.9rem; min-width:0}
+
+/* Cartões */
+.grid{display:grid; gap:16px; grid-template-columns:1fr}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:18px; display:grid; gap:12px; align-content:start; min-width:0; box-shadow:var(--shadow)}
+.card p{color:var(--ink-soft)}
+.card-head{display:flex; gap:12px; align-items:center}
+.tile{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:var(--leaf-tint); color:var(--leaf-deep); flex:none}
+.tile.need{background:var(--clay-tint); color:var(--clay)}
+.pills{display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.pill{font-size:.74rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:3px 10px; border-radius:999px; background:var(--leaf-tint); color:var(--leaf-deep)}
+.pill.need{background:var(--clay-tint); color:var(--clay)}
+.pill.cat{background:transparent; border:1px solid var(--line); color:var(--ink-soft)}
+.tag{font-size:.85rem; padding:2px 11px; border-radius:999px; background:var(--surface-2); color:var(--ink-soft); border:1px solid var(--line)}
+.who{display:flex; gap:10px; align-items:center; min-width:0}
+.avatar{width:36px; height:36px; border-radius:50%; display:grid; place-items:center; font:800 .95rem var(--f-display); background:var(--leaf-tint); color:var(--leaf-deep); flex:none}
+.avatar.alt{background:var(--clay-tint); color:var(--clay)}
+.who b{display:block; font-size:.95rem; line-height:1.2}
+.who span{display:block; font-size:.85rem; color:var(--ink-soft); line-height:1.25}
+.contact{display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--line); font-size:.9rem; color:var(--ink-soft)}
+.meta{font-size:.88rem; color:var(--ink-soft)}
+.empty{padding:32px 16px; text-align:center; color:var(--ink-soft); border:1px dashed var(--line); border-radius:18px}
+
+/* Formulário */
+details.new{background:var(--surface); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow)}
+details.new summary{list-style:none; cursor:pointer; padding:14px 18px; font-weight:700; display:flex; justify-content:space-between; align-items:center; min-height:56px}
+details.new summary::-webkit-details-marker{display:none}
+details.new summary::after{content:"+"; font-size:1.5rem; line-height:1; color:var(--leaf-deep)}
+details.new[open] summary::after{content:"–"}
+form{display:grid; gap:14px; padding:0 18px 18px}
+.row{display:grid; gap:14px; grid-template-columns:1fr}
+.radios{display:flex; gap:10px; flex-wrap:wrap}
+.radios label{display:flex; align-items:center; gap:8px; font-weight:700; border:1px solid var(--line); border-radius:12px; padding:0 16px; min-height:46px; cursor:pointer}
+.radios input{width:auto; min-height:0; accent-color:var(--leaf)}
+.status{font-size:.92rem; color:var(--leaf-deep); font-weight:600; min-height:1.4em}
+
+/* Sobre */
+.tl{margin:0; padding:0; list-style:none; display:grid; gap:0; counter-reset:s}
+.tl li{counter-increment:s; position:relative; padding:0 0 18px 48px}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:counter(s); position:absolute; left:0; top:0; width:34px; height:34px; border-radius:50%; background:var(--leaf); color:var(--leaf-ink); display:grid; place-items:center; font:800 .95rem var(--f-display)}
+.tl li::after{content:""; position:absolute; left:16px; top:38px; bottom:4px; width:2px; background:var(--line)}
+.tl li:last-child::after{display:none}
+ul.q{margin:0; padding:0; list-style:none; display:grid; gap:10px}
+ul.q li{position:relative; padding-left:26px}
+ul.q li::before{content:""; position:absolute; left:2px; top:.5em; width:10px; height:10px; border-radius:3px; background:var(--leaf); transform:rotate(45deg)}
+.ods{display:grid; gap:12px; grid-template-columns:1fr}
+.ods div{background:var(--surface-2); border:1px solid var(--line); border-radius:14px; padding:12px 14px}
+.ods b{font-family:var(--f-display); font-size:1.3rem; color:var(--leaf-deep); display:block}
+footer{margin-top:28px; padding-top:16px; border-top:1px solid var(--line); font-size:.88rem; color:var(--ink-soft)}
+
+@media (min-width:720px){
+  body{font-size:18px; padding-block:0 56px}
+  .how{grid-template-columns:repeat(3,1fr)}
+  h1{font-size:2.5rem}
+  .hero{padding:44px 44px 32px; gap:18px}
+  .art{height:340px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .row{grid-template-columns:1fr 1fr}
+  .ods{grid-template-columns:repeat(3,1fr)}
+  nav{position:static; display:flex; gap:4px; background:transparent; border:0; padding:0}
+  nav a{display:block; padding:10px 14px; font-size:.95rem; border-bottom:3px solid transparent; min-height:0; border-radius:0}
+  nav a .ico{display:none}
+  nav a[aria-current="page"]{color:var(--ink); border-bottom-color:var(--leaf)}
+}
+@media (prefers-reduced-motion:no-preference){
+  .card{transition:transform .18s ease, border-color .18s ease}
+  .card:hover{transform:translateY(-2px); border-color:var(--leaf)}
+}
+@media (prefers-reduced-motion:no-preference){.pulse{transform-box:fill-box; transform-origin:center; animation:pulso 3.2s ease-out infinite}}
+@keyframes pulso{0%{transform:scale(.55); opacity:.9} 100%{transform:scale(1.5); opacity:0}}
+@media (prefers-reduced-motion:reduce){.view.in{animation:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="top-in">
+      <div class="brand">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29V15" stroke="var(--leaf)" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M16 16c0-6 4-9.5 11-9.5 0 6.5-4.5 9.5-11 9.5z" fill="var(--leaf)"/><path d="M16 21c0-5-3-8.5-9.5-8.5 0 5.5 3.5 8.5 9.5 8.5z" fill="var(--leaf-deep)"/></svg>
+        <div><b>Juntos Produzimos Mais<i class="proto">Protótipo</i></b><span>Cooperação e redes no meio rural</span></div>
+      </div>
+      <nav aria-label="Seções">
+        <a href="#mural"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>Mural</a>
+        <a href="#produtores"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.500 2.700-6 6-6s6 2.500 6 6"/><circle cx="17" cy="9" r="2.400"/><path d="M16.500 14.200c2.800.2 4.500 2.200 4.500 5"/></svg></span>Produtores</a>
+        <a href="#experiencias"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></span>Experiências</a>
+        <a href="#sobre"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.500v.01"/></svg></span>Sobre</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- MURAL -->
+    <section class="view" id="v-mural" aria-label="Mural de recursos">
+      <div class="hero">
+        <p class="eyebrow">Projeto de extensão · Agronomia</p>
+        <h1>Juntos produzimos <em>mais</em>.</h1>
+        <p class="hero-lead">Quando os produtores dividem informação, experiência e recursos, o problema de um vira solução de todos.</p>
+        <div class="cta">
+          <button class="btn light" type="button" id="cta-ver">Ver o mural</button>
+          <button class="btn ghost" type="button" id="cta-pub">Publicar anúncio</button>
+        </div>
+        <div class="art"><svg id="quilt" viewBox="0 0 800 340" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Vista aérea de talhões de plantio ligados por uma linha que representa a rede entre propriedades"></svg></div>
+        <p class="stats" id="stats"></p>
+      </div>
+
+      <ul class="how" aria-label="Como usar">
+        <li><span class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><div><b>Veja o que há</b><p>Confira o mural e a rede de produtores da sua região.</p></div></li>
+        <li><span class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.500 6.500l4 4"/></svg></span><div><b>Publique o seu</b><p>Escreva o que oferece ou o que precisa, com título, detalhes e WhatsApp.</p></div></li>
+        <li><span class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></span><div><b>Combine direto</b><p>Quem se interessar chama você no WhatsApp e vocês acertam os detalhes.</p></div></li>
+      </ul>
+
+      <div class="head" id="topo-mural">
+        <h2>Mural de recursos</h2>
+        <p class="lead">O que cada produtor oferece e o que está procurando. Quem se interessar chama direto no WhatsApp.</p>
+      </div>
+
+      <details class="new" id="novo">
+        <summary>Publicar um anúncio</summary>
+        <form id="form-novo" autocomplete="off">
+          <div class="radios" role="radiogroup" aria-label="Tipo de anúncio">
+            <label for="tipo-oferco"><input type="radio" name="tipo" id="tipo-oferco" value="oferco" checked> Ofereço</label>
+            <label for="tipo-preciso"><input type="radio" name="tipo" id="tipo-preciso" value="preciso"> Preciso</label>
+          </div>
+          <div class="row">
+            <label for="f-cat">Categoria
+              <select id="f-cat"></select>
+            </label>
+            <label for="f-titulo">Título
+              <input id="f-titulo" type="text" maxlength="80" placeholder="Ex.: Divido o frete até a feira" required>
+            </label>
+          </div>
+          <label for="f-desc">Detalhes
+            <textarea id="f-desc" maxlength="300" placeholder="Quando, quanto, em que condições"></textarea>
+          </label>
+          <div class="row">
+            <label for="f-nome">Seu nome
+              <input id="f-nome" type="text" maxlength="50" required>
+            </label>
+            <label for="f-com">Comunidade ou associação
+              <input id="f-com" type="text" maxlength="60">
+            </label>
+          </div>
+          <label for="f-fone">WhatsApp com DDD
+            <input id="f-fone" type="tel" inputmode="tel" maxlength="20" placeholder="(00) 90000-0000">
+          </label>
+          <div><button class="btn" type="submit">Publicar</button></div>
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+        </form>
+      </details>
+
+      <div class="filters">
+        <div class="seg" role="group" aria-label="Filtrar por tipo">
+          <button type="button" data-tipo="todos" aria-pressed="true">Todos</button>
+          <button type="button" data-tipo="oferco" aria-pressed="false">Ofereço</button>
+          <button type="button" data-tipo="preciso" aria-pressed="false">Preciso</button>
+        </div>
+        <select id="filtro-cat" aria-label="Filtrar por categoria"></select>
+      </div>
+      <div class="grid" id="lista-mural"></div>
+    </section>
+
+    <!-- PRODUTORES -->
+    <section class="view" id="v-produtores" aria-labelledby="t-prod" hidden>
+      <div class="head">
+        <p class="eyebrow" style="color:var(--leaf-deep)">Quem está na rede</p>
+        <h1 id="t-prod">Rede de produtores</h1>
+        <p class="lead">Quem produz o quê na região, e o que cada um pode compartilhar.</p>
+      </div>
+      <label for="busca">Buscar por nome, comunidade ou produto
+        <input id="busca" type="search" placeholder="Ex.: mandioca, Boa Vista, Marlene">
+      </label>
+      <div class="grid" id="lista-prod"></div>
+    </section>
+
+    <!-- EXPERIÊNCIAS -->
+    <section class="view" id="v-experiencias" aria-labelledby="t-exp" hidden>
+      <div class="head">
+        <p class="eyebrow" style="color:var(--leaf-deep)">Cooperação na prática</p>
+        <h1 id="t-exp">Experiências que deram certo</h1>
+        <p class="lead">Relatos curtos de produtores que resolveram um problema em conjunto.</p>
+      </div>
+      <div class="grid" id="lista-exp"></div>
+    </section>
+
+    <!-- SOBRE -->
+    <section class="view" id="v-sobre" aria-labelledby="t-sobre" hidden>
+      <div class="head">
+        <p class="eyebrow" style="color:var(--leaf-deep)">Trabalho, Empregabilidade e Renda</p>
+        <h1 id="t-sobre">Sobre o projeto</h1>
+        <p class="lead">Projeto de extensão de Agronomia para fortalecer a cooperação entre pequenos produtores rurais, por meio da troca de informações, experiências, contatos e recursos.</p>
+      </div>
+
+      <div class="card">
+        <h2>Como a ação acontece</h2>
+        <ol class="tl">
+          <li>Contato inicial com produtores, associação ou comunidade rural.</li>
+          <li>Entrevistas, conversas ou questionários para levantar as dificuldades em comum.</li>
+          <li>Organização das informações coletadas.</li>
+          <li>Construção, junto com os participantes, de uma ferramenta simples de cooperação. Este site é a primeira versão dela.</li>
+          <li>Apresentação e orientação sobre o uso da ferramenta.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h2>Roteiro de conversa com os produtores</h2>
+        <p>Perguntas para o levantamento. As respostas orientam os ajustes no mural.</p>
+        <ul class="q">
+          <li>O que você produz e em que área (hectares ou alqueires)?</li>
+          <li>Quais são as maiores dificuldades hoje: produção, informação, uso de recursos ou venda?</li>
+          <li>Você já recebeu ajuda de outro produtor? Em que situação?</li>
+          <li>O que você poderia emprestar, trocar ou dividir com os vizinhos?</li>
+          <li>O que você mais precisa e não consegue resolver sozinho?</li>
+          <li>Como você costuma conversar com outros produtores: WhatsApp, associação, reunião?</li>
+          <li>Você participa de associação ou grupo? O que funciona e o que não funciona nele?</li>
+          <li>Qual ferramenta ajudaria mais: lista de contatos, mural de recursos ou combinados de colaboração?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Combinados para colaborar</h2>
+        <p>Proposta inicial de protocolo de colaboração, para ser discutida e ajustada com os produtores.</p>
+        <ul class="q">
+          <li>Cumprir o que foi combinado e avisar com antecedência quando não der.</li>
+          <li>Deixar claro, antes de começar, quem paga o quê: frete, diesel, diárias.</li>
+          <li>Devolver o que foi emprestado no prazo e no estado em que estava.</li>
+          <li>Pedir ajuda sem constrangimento e agradecer a quem ajudou.</li>
+          <li>Compartilhar o que aprendeu, inclusive o que não deu certo.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Objetivos de Desenvolvimento Sustentável</h2>
+        <div class="ods">
+          <div><b>ODS 8</b><p>Trabalho decente e crescimento econômico</p></div>
+          <div><b>ODS 10</b><p>Redução das desigualdades</p></div>
+          <div><b>ODS 17</b><p>Parcerias e meios de implementação</p></div>
+        </div>
+      </div>
+      <footer>Projeto de Extensão · Agronomia · 2026<br>Área temática: Trabalho, Empregabilidade e Renda · ODS 8, 10 e 17<br>Protótipo ilustrativo: nomes, comunidades e contatos são fictícios.</footer>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  var CATS = ["Máquinas e equipamentos","Transporte","Sementes e insumos","Mão de obra","Comercialização","Conhecimento"];
+  var ICONS = {
+    tractor:'<circle cx="7" cy="16" r="3.500"/><circle cx="18" cy="17.500" r="2"/><path d="M10.500 16H16M3.500 16V9h6l2 4h5.500V8h2"/>',
+    truck:'<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.500" r="1.800"/><circle cx="17" cy="17.500" r="1.800"/>',
+    sprout:'<path d="M12 21v-9"/><path d="M12 12c0-4 2.500-6 7-6 0 4-2.500 6-7 6z"/><path d="M12 15c0-3-2-5-6-5 0 3 2 5 6 5z"/>',
+    people:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.500 2.700-6 6-6s6 2.500 6 6"/><circle cx="17" cy="9" r="2.400"/><path d="M16.500 14.200c2.800.2 4.500 2.200 4.500 5"/>',
+    tag:'<path d="M3 11V4h7l10 10-7 7z"/><circle cx="7.500" cy="8.500" r="1.200"/>',
+    book:'<path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v13c-3-1-6-1-8 1-2-2-5-2-8-1z"/><path d="M12 6v13"/>'
+  };
+  var CAT_ICON = {"Máquinas e equipamentos":"tractor","Transporte":"truck","Sementes e insumos":"sprout","Mão de obra":"people","Comercialização":"tag","Conhecimento":"book","Compra coletiva":"tag"};
+
+  var MURAL = [
+    {tipo:"oferco", cat:"Máquinas e equipamentos", titulo:"Trator com carreta na semana de plantio", desc:"Tenho horário livre entre terças e quintas. Divido o gasto de diesel.", nome:"Seu Antônio", com:"Comunidade Boa Vista", fone:"(00) 90000-0001"},
+    {tipo:"preciso", cat:"Transporte", titulo:"Frete para a feira de sábado", desc:"Levo cerca de 40 caixas de verdura. Procuro quem passe pela estrada do rio e divida o frete.", nome:"Dona Marlene", com:"Comunidade Santa Luzia", fone:"(00) 90000-0002"},
+    {tipo:"oferco", cat:"Sementes e insumos", titulo:"Sementes de feijão crioulo", desc:"Guardei da última safra. Troco por semente de milho ou mudas.", nome:"Joaquim", com:"Associação Vale Verde", fone:"(00) 90000-0003"},
+    {tipo:"preciso", cat:"Mão de obra", titulo:"Duas pessoas para a colheita de tomate", desc:"Dois dias, na próxima semana. Pago a diária e o almoço.", nome:"Rita", com:"Comunidade Boa Vista", fone:"(00) 90000-0004"},
+    {tipo:"oferco", cat:"Conhecimento", titulo:"Ensino a fazer composto na propriedade", desc:"Faço há cinco anos. Posso mostrar o passo a passo em uma tarde.", nome:"Cláudia", com:"Associação Vale Verde", fone:"(00) 90000-0005"},
+    {tipo:"preciso", cat:"Comercialização", titulo:"Grupo para compra conjunta de calcário", desc:"Comprando em volume o preço da tonelada cai. Quero juntar pelo menos 5 produtores.", nome:"Seu Raimundo", com:"Comunidade Santa Luzia", fone:"(00) 90000-0006"},
+    {tipo:"oferco", cat:"Transporte", titulo:"Vaga na caminhonete para a feira de sexta", desc:"Saio às 5h da Comunidade Água Limpa e tenho espaço para 20 caixas. Divido o combustível.", nome:"Benedito", com:"Comunidade Água Limpa", fone:"(00) 90000-0007"},
+    {tipo:"preciso", cat:"Máquinas e equipamentos", titulo:"Empréstimo de pulverizador costal", desc:"Preciso por um dia na próxima semana. Devolvo limpo e pago a manutenção, se houver.", nome:"Lúcia", com:"Comunidade Água Limpa", fone:"(00) 90000-0008"},
+    {tipo:"oferco", cat:"Mão de obra", titulo:"Equipe de três pessoas para poda e colheita", desc:"Trabalhamos em família e podemos atender mais de uma propriedade na mesma semana.", nome:"Zé Pereira", com:"Associação Vale Verde", fone:"(00) 90000-0009"},
+    {tipo:"preciso", cat:"Conhecimento", titulo:"Orientação para certificar produção orgânica", desc:"Quero entender os passos e os custos. Alguém que já passou por isso pode conversar comigo?", nome:"Marcos", com:"Comunidade Santa Luzia", fone:"(00) 90000-0010"}
+  ];
+  var PRODUTORES = [
+    {nome:"Seu Antônio", com:"Comunidade Boa Vista", produz:["milho","mandioca","gado leiteiro"], oferece:"Trator e carreta em horários combinados."},
+    {nome:"Dona Marlene", com:"Comunidade Santa Luzia", produz:["hortaliças","ovos"], oferece:"Vende na feira de sábado e aceita levar produto de vizinhos."},
+    {nome:"Joaquim", com:"Associação Vale Verde", produz:["feijão","milho crioulo"], oferece:"Sementes crioulas para troca."},
+    {nome:"Rita", com:"Comunidade Boa Vista", produz:["tomate","pimentão"], oferece:"Experiência em cultivo protegido."},
+    {nome:"Cláudia", com:"Associação Vale Verde", produz:["hortaliças orgânicas","frutas"], oferece:"Ensina compostagem e manejo de horta."},
+    {nome:"Seu Raimundo", com:"Comunidade Santa Luzia", produz:["café","banana"], oferece:"Organiza compras coletivas de insumos."},
+    {nome:"Benedito", com:"Comunidade Água Limpa", produz:["banana","inhame"], oferece:"Vaga na caminhonete para levar produção até a feira."},
+    {nome:"Lúcia", com:"Comunidade Água Limpa", produz:["hortaliças","mel"], oferece:"Troca de mudas e experiência com apicultura."},
+    {nome:"Zé Pereira", com:"Associação Vale Verde", produz:["café","feijão"], oferece:"Equipe familiar para poda e colheita."},
+    {nome:"Marcos", com:"Comunidade Santa Luzia", produz:["leite","queijo artesanal"], oferece:"Busca parceiros para entrega conjunta de queijos."}
+  ];
+  var EXPERIENCIAS = [
+    {tema:"Comercialização", titulo:"Frete dividido para a feira", texto:"Quatro famílias passaram a levar a produção no mesmo veículo, com revezamento do motorista. O custo por caixa caiu e cada um ganhou um dia livre na semana.", por:"Grupo da Comunidade Boa Vista"},
+    {tema:"Sementes e insumos", titulo:"Banco de sementes da comunidade", texto:"Cada produtor deixa uma parte da semente que sobra e retira quando precisa, com um caderno simples de entrada e saída.", por:"Associação Vale Verde"},
+    {tema:"Mão de obra", titulo:"Mutirão de cerca", texto:"Em vez de contratar sozinho, os vizinhos combinaram um calendário: cada propriedade recebe o grupo por um dia e todos fazem a cerca juntos.", por:"Comunidade Santa Luzia"},
+    {tema:"Compra coletiva", titulo:"Insumos comprados em grupo", texto:"Ao juntar os pedidos, o grupo negociou preço melhor e dividiu o frete do fornecedor. Um combinado escrito definiu quem busca e quem paga primeiro.", por:"Seu Raimundo e vizinhos"},
+    {tema:"Máquinas e equipamentos", titulo:"Agenda do trator da associação", texto:"Seis propriedades dividem o trator com uma agenda combinada no grupo de WhatsApp. Cada uma paga pelas horas usadas, e o valor cobre a manutenção.", por:"Associação Vale Verde"},
+    {tema:"Comercialização", titulo:"Uma banca só na feira da cidade", texto:"Em vez de cada família ter a sua banca, a comunidade montou uma única, com revezamento de quem atende. O ganho é dividido conforme o que cada um levou.", por:"Comunidade Água Limpa"}
+  ];
+
+  var STORE_KEY = "jpm-anuncios";
+  var minhas = [];
+  try { minhas = JSON.parse(localStorage.getItem(STORE_KEY) || "[]"); if(!Array.isArray(minhas)) minhas = []; } catch(e){ minhas = []; }
+
+  function el(tag, cls, text){ var n = document.createElement(tag); if(cls) n.className = cls; if(text != null) n.textContent = text; return n; }
+  function icon(name){
+    var s = el("span");
+    s.innerHTML = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || ICONS.sprout) + '</svg>';
+    return s.firstChild;
+  }
+  function digits(s){ return String(s||"").replace(/\D/g,""); }
+  function waLink(fone){
+    var d = digits(fone);
+    if(d.length < 10) return null;
+    if(d.length <= 11) d = "55" + d;
+    return "https://wa.me/" + d;
+  }
+  function initial(nome){ var t = String(nome||"?").replace(/^(Seu|Dona)\s+/i,"").trim(); return (t.charAt(0) || "?").toUpperCase(); }
+
+  /* Ilustração: paisagem rural vista de cima, com propriedades ligadas por um caminho */
+  function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function f1(n){ return n.toFixed(1); }
+  function buildQuilt(){
+    var svg = document.getElementById("quilt");
+    var W = 800, H = 340, r = rng(11), parcels = [];
+    function split(x,y,w,h,d){
+      if(d === 0 || (w < 110 && h < 90)){ parcels.push({x:x,y:y,w:w,h:h}); return; }
+      var vertical = w > h*1.1 ? true : (h > w*1.1 ? false : r() > .5);
+      var t = .36 + r()*.28;
+      if(vertical){ split(x,y,w*t,h,d-1); split(x+w*t,y,w*(1-t),h,d-1); }
+      else { split(x,y,w,h*t,d-1); split(x,y+h*t,w,h*(1-t),d-1); }
+    }
+    split(0,0,W,H,4);
+
+    var colors = ["#1E5A40","#256B49","#2F7D54","#1A4D37","#3C8A5C","#2B6F4D","#A9823A","#8C9B52","#6F8F4A"];
+    var angles = [0, 90, 24, -32, 62];
+    var defs = angles.map(function(a,i){
+      return '<pattern id="st'+i+'" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate('+a+')"><line x1="0" y1="0" x2="0" y2="8" stroke="rgba(255,255,255,.16)" stroke-width="2"/><line x1="4" y1="0" x2="4" y2="8" stroke="rgba(0,0,0,.14)" stroke-width="1.5"/></pattern>';
+    }).join("");
+    defs += '<pattern id="dots" width="15" height="15" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><circle cx="8.500" cy="8.500" r="3.600" fill="rgba(5,24,14,.38)"/><circle cx="7.500" cy="7.500" r="3.400" fill="#2D7A50"/><circle cx="6.500" cy="6.500" r="1.400" fill="rgba(255,255,255,.22)"/></pattern>';
+    defs += '<pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(255,255,255,.09)" stroke-width="1.500"/></pattern>';
+    defs += '<linearGradient id="luz" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF6D8" stop-opacity=".16"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity="0"/><stop offset="1" stop-color="#021008" stop-opacity=".30"/></linearGradient>';
+    defs += '<radialGradient id="borda" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#05140C" stop-opacity="0"/><stop offset="1" stop-color="#05140C" stop-opacity=".55"/></radialGradient>';
+
+    var body = "";
+    parcels.forEach(function(p){
+      var c = colors[Math.floor(r()*colors.length)];
+      var kind = r();
+      var x = f1(p.x+3), y = f1(p.y+3), w = f1(p.w-6), h = f1(p.h-6);
+      p.cx = p.x + p.w/2; p.cy = p.y + p.h/2;
+      body += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="3" fill="'+c+'"/>';
+      var tex = kind < .58 ? 'url(#st'+Math.floor(r()*angles.length)+')' : (kind < .80 ? 'url(#dots)' : (kind < .92 ? 'url(#hatch)' : ''));
+      if(tex) body += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="3" fill="'+tex+'"/>';
+      body += '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="3" fill="none" stroke="#0B2A1C" stroke-opacity=".55" stroke-width="2"/>';
+    });
+
+    /* rio */
+    var rio = "M-20 70 C 140 10 230 150 380 125 S 600 235 820 212";
+    body += '<path d="'+rio+'" fill="none" stroke="#06190F" stroke-opacity=".45" stroke-width="22" stroke-linecap="round"/>';
+    body += '<path d="'+rio+'" fill="none" stroke="#2F7F8E" stroke-width="15" stroke-linecap="round"/>';
+    body += '<path d="'+rio+'" fill="none" stroke="#7DBBC4" stroke-opacity=".55" stroke-width="5" stroke-linecap="round"/>';
+
+    /* pontos da rede */
+    var cand = parcels.filter(function(p){ return p.cx > 120 && p.cx < 690 && p.cy > 40 && p.cy < 300; }).sort(function(a,b){ return a.cx - b.cx; });
+    var pts = [], lastX = -999;
+    cand.forEach(function(p){ if(p.cx - lastX > 80 && pts.length < 6){ pts.push({x:p.cx, y:p.cy}); lastX = p.cx; } });
+
+    /* árvores */
+    var trees = "";
+    for(var i = 0; i < 70; i++){
+      var tx = 10 + r()*(W-20), ty = 10 + r()*(H-20), tr = 4 + r()*5, near = false;
+      pts.forEach(function(p){ if(Math.abs(p.x-tx) < 34 && Math.abs(p.y-ty) < 30) near = true; });
+      if(near) continue;
+      trees += '<circle cx="'+f1(tx+2)+'" cy="'+f1(ty+3)+'" r="'+f1(tr)+'" fill="#031009" fill-opacity=".35"/>';
+      trees += '<circle cx="'+f1(tx)+'" cy="'+f1(ty)+'" r="'+f1(tr)+'" fill="#0F3A28"/>';
+      trees += '<circle cx="'+f1(tx-tr*.3)+'" cy="'+f1(ty-tr*.3)+'" r="'+f1(tr*.5)+'" fill="#3F8F63" fill-opacity=".7"/>';
+    }
+    body += trees;
+
+    /* caminho entre as propriedades */
+    var path = "";
+    if(pts.length > 1){
+      path = "M" + f1(pts[0].x) + " " + f1(pts[0].y);
+      for(var j = 0; j < pts.length - 1; j++){
+        var p0 = pts[j-1] || pts[j], p1 = pts[j], p2 = pts[j+1], p3 = pts[j+2] || p2;
+        var c1x = p1.x + (p2.x - p0.x)/6, c1y = p1.y + (p2.y - p0.y)/6;
+        var c2x = p2.x - (p3.x - p1.x)/6, c2y = p2.y - (p3.y - p1.y)/6;
+        path += " C" + [c1x,c1y,c2x,c2y,p2.x,p2.y].map(f1).join(" ");
+      }
+      body += '<path d="'+path+'" fill="none" stroke="#06190F" stroke-opacity=".5" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>';
+      body += '<path d="'+path+'" fill="none" stroke="#CDB57F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>';
+      body += '<path d="'+path+'" fill="none" stroke="#EDC46A" stroke-width="2.600" stroke-linecap="round" stroke-dasharray="0.1 7"/>';
+    }
+
+    /* sedes das propriedades */
+    pts.forEach(function(p,i){
+      var rot = Math.round((r()-.5)*40);
+      body += '<circle class="pulse" cx="'+f1(p.x)+'" cy="'+f1(p.y)+'" r="22" fill="#EDC46A" fill-opacity=".30"/>';
+      body += '<g transform="translate('+f1(p.x)+' '+f1(p.y)+') rotate('+rot+')">';
+      body += '<rect x="-11" y="-6" width="26" height="16" rx="2" fill="#031009" fill-opacity=".40"/>';
+      body += '<rect x="-13" y="-9" width="26" height="16" rx="2" fill="#E8DDC0"/>';
+      body += '<path d="M-15 -9 L0 -17 L15 -9 L15 -1 L0 -9 L-15 -1 Z" fill="#B5522F"/>';
+      body += '<path d="M-15 -9 L0 -17 L0 -9 Z" fill="#CF6B43"/>';
+      body += '<rect x="-4" y="-2" width="8" height="9" fill="#7A5B3A"/>';
+      body += '</g>';
+      body += '<circle cx="'+f1(p.x)+'" cy="'+f1(p.y+22)+'" r="3" fill="#EDC46A" stroke="#0A2218" stroke-width="1.500"/>';
+    });
+
+    /* luz e borda */
+    body += '<rect width="800" height="340" fill="url(#luz)"/>';
+    body += '<rect width="800" height="340" fill="url(#borda)"/>';
+
+    svg.innerHTML = '<defs>'+defs+'</defs><rect width="800" height="340" fill="#0A2218"/>' + body;
+  }
+
+  /* Estatísticas da capa */
+  function renderStats(){
+    var box = document.getElementById("stats");
+    box.textContent = "";
+    var coms = {};
+    PRODUTORES.forEach(function(p){ coms[p.com] = 1; });
+    [[minhas.length + MURAL.length, "anúncios"],[PRODUTORES.length, "produtores"],[Object.keys(coms).length, "comunidades"]].forEach(function(s){
+      var sp = el("span");
+      sp.appendChild(el("b", null, String(s[0])));
+      sp.appendChild(document.createTextNode(" " + s[1]));
+      box.appendChild(sp);
+    });
+  }
+
+  /* Roteamento por hash */
+  var VIEWS = ["mural","produtores","experiencias","sobre"];
+  function route(){
+    var h = (location.hash || "").replace("#","");
+    if(VIEWS.indexOf(h) < 0) h = "mural";
+    VIEWS.forEach(function(v){
+      var s = document.getElementById("v-"+v);
+      var show = (v === h);
+      if(show && s.hidden){ s.hidden = false; s.classList.remove("in"); void s.offsetWidth; s.classList.add("in"); }
+      else if(!show){ s.hidden = true; s.classList.remove("in"); }
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("nav a"), function(a){
+      if(a.getAttribute("href") === "#"+h) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    });
+  }
+  window.addEventListener("hashchange", function(){ route(); window.scrollTo(0,0); });
+
+  /* Mural */
+  var filtroTipo = "todos", filtroCat = "todas";
+  var selCat = document.getElementById("filtro-cat");
+  var fCat = document.getElementById("f-cat");
+  var optTodas = el("option", null, "Todas as categorias"); optTodas.value = "todas"; selCat.appendChild(optTodas);
+  CATS.forEach(function(c){
+    var o1 = el("option", null, c); o1.value = c; selCat.appendChild(o1);
+    var o2 = el("option", null, c); o2.value = c; fCat.appendChild(o2);
+  });
+
+  function cardMural(a, idx){
+    var need = a.tipo === "preciso";
+    var c = el("article","card");
+    var head = el("div","card-head");
+    var tile = el("div","tile" + (need ? " need" : ""));
+    tile.appendChild(icon(CAT_ICON[a.cat]));
+    head.appendChild(tile);
+    var pills = el("div","pills");
+    pills.appendChild(el("span","pill" + (need ? " need" : ""), need ? "Preciso" : "Ofereço"));
+    pills.appendChild(el("span","pill cat", a.cat));
+    head.appendChild(pills);
+    c.appendChild(head);
+    c.appendChild(el("h3", null, a.titulo));
+    if(a.desc) c.appendChild(el("p", null, a.desc));
+    var ct = el("div","contact");
+    var who = el("div","who");
+    who.appendChild(el("div","avatar" + (idx % 2 ? " alt" : ""), initial(a.nome)));
+    var wt = el("div");
+    wt.appendChild(el("b", null, a.nome));
+    if(a.com) wt.appendChild(el("span", null, a.com));
+    who.appendChild(wt);
+    ct.appendChild(who);
+    var link = a.mine ? waLink(a.fone) : null;
+    if(link){
+      var b = el("a","btn small","Chamar no WhatsApp");
+      b.href = link; b.target = "_blank"; b.rel = "noopener";
+      ct.appendChild(b);
+    } else if(a.fone){
+      ct.appendChild(el("span", null, "WhatsApp " + a.fone));
+    }
+    c.appendChild(ct);
+    if(a.mine) c.appendChild(el("div","meta","Publicado por você, visível só neste aparelho."));
+    return c;
+  }
+
+  function renderMural(){
+    var box = document.getElementById("lista-mural");
+    box.textContent = "";
+    var todos = minhas.map(function(a){ a.mine = true; return a; }).concat(MURAL);
+    var lista = todos.filter(function(a){
+      return (filtroTipo === "todos" || a.tipo === filtroTipo) && (filtroCat === "todas" || a.cat === filtroCat);
+    });
+    renderStats();
+    if(!lista.length){ box.appendChild(el("div","empty","Nenhum anúncio com esses filtros.")); return; }
+    lista.forEach(function(a,i){ box.appendChild(cardMural(a,i)); });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function(b){
+    b.addEventListener("click", function(){
+      filtroTipo = b.getAttribute("data-tipo");
+      Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function(x){
+        x.setAttribute("aria-pressed", x === b ? "true" : "false");
+      });
+      renderMural();
+    });
+  });
+  selCat.addEventListener("change", function(){ filtroCat = selCat.value; renderMural(); });
+
+  document.getElementById("cta-ver").addEventListener("click", function(){
+    document.getElementById("topo-mural").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+  document.getElementById("cta-pub").addEventListener("click", function(){
+    var d = document.getElementById("novo");
+    d.open = true;
+    d.scrollIntoView({behavior:"smooth", block:"start"});
+    setTimeout(function(){ document.getElementById("f-titulo").focus({preventScroll:true}); }, 350);
+  });
+
+  document.getElementById("form-novo").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var titulo = document.getElementById("f-titulo").value.trim();
+    var nome = document.getElementById("f-nome").value.trim();
+    var status = document.getElementById("status");
+    if(!titulo || !nome){ status.textContent = "Preencha o título e o seu nome."; return; }
+    var tipo = document.querySelector('input[name="tipo"]:checked').value;
+    minhas.unshift({
+      tipo: tipo,
+      cat: fCat.value,
+      titulo: titulo,
+      desc: document.getElementById("f-desc").value.trim(),
+      nome: nome,
+      com: document.getElementById("f-com").value.trim(),
+      fone: document.getElementById("f-fone").value.trim()
+    });
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(minhas)); } catch(e){}
+    ev.target.reset();
+    status.textContent = "Anúncio publicado. Ele aparece no topo da lista, neste aparelho.";
+    renderMural();
+  });
+
+  /* Produtores */
+  function renderProd(){
+    var q = document.getElementById("busca").value.trim().toLowerCase();
+    var box = document.getElementById("lista-prod");
+    box.textContent = "";
+    var lista = PRODUTORES.filter(function(p){
+      if(!q) return true;
+      return (p.nome + " " + p.com + " " + p.produz.join(" ") + " " + p.oferece).toLowerCase().indexOf(q) >= 0;
+    });
+    if(!lista.length){ box.appendChild(el("div","empty","Nenhum produtor encontrado.")); return; }
+    lista.forEach(function(p,i){
+      var c = el("article","card");
+      var who = el("div","who");
+      who.appendChild(el("div","avatar" + (i % 2 ? " alt" : ""), initial(p.nome)));
+      var wt = el("div");
+      wt.appendChild(el("b", null, p.nome));
+      wt.appendChild(el("span", null, p.com));
+      who.appendChild(wt);
+      c.appendChild(who);
+      var tags = el("div","pills");
+      p.produz.forEach(function(t){ tags.appendChild(el("span","tag", t)); });
+      c.appendChild(tags);
+      c.appendChild(el("p", null, p.oferece));
+      box.appendChild(c);
+    });
+  }
+  document.getElementById("busca").addEventListener("input", renderProd);
+
+  /* Experiências */
+  function renderExp(){
+    var box = document.getElementById("lista-exp");
+    box.textContent = "";
+    EXPERIENCIAS.forEach(function(e){
+      var c = el("article","card");
+      var head = el("div","card-head");
+      var tile = el("div","tile"); tile.appendChild(icon(CAT_ICON[e.tema]));
+      head.appendChild(tile);
+      head.appendChild(el("span","pill cat", e.tema));
+      c.appendChild(head);
+      c.appendChild(el("h3", null, e.titulo));
+      c.appendChild(el("p", null, e.texto));
+      c.appendChild(el("div","meta", "Relato de: " + e.por));
+      box.appendChild(c);
+    });
+  }
+
+  buildQuilt(); renderMural(); renderProd(); renderExp(); route();
+})();
+</script>
+</body></html>
